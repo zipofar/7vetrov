@@ -18,7 +18,7 @@ class Task3 extends BaseController
     public function insert()
     {
         $model = new MTask3();
-        $model->fillTable($this->prepareData(100, 5));
+        $model->fillTable($this->prepareData(3, 5));
         header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 
@@ -60,11 +60,16 @@ class Task3 extends BaseController
     private function getRandomParent($cur_id, $data, $deep)
     {
         $parent = rand(0, $cur_id - 1);
-        for ($i = 0; $i < $deep; $i++) {
-            if($data[$parent]['parent'] > 0) {
-                
+        $tmp = $parent;
+
+        if($parent > 0) {
+            for ($i = 0; $i < $deep; $i++) {
+                if($data[$tmp]['parent'] > 0) {
+                    var_dump($tmp);
+                }
             }
         }
+        var_dump('h');
         return $parent;
     }
 
