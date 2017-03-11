@@ -18,8 +18,8 @@ class Task3 extends BaseController
     public function insert()
     {
         $model = new MTask3();
-        $model->fillTable($this->prepareData(3, 5));
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        $model->fillTable($this->prepareData(10, 5));
+//        header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 
     public function truncate()
@@ -29,15 +29,21 @@ class Task3 extends BaseController
         header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 
+    public function showTree() {
+        $model = new MTask3();
+        $tree = $model->getTree();
+        var_dump($tree);
+        
+    }
+
     private function prepareData($amount_rec, $deep)
     {
         $data = array();
-
         for ($i = 1; $i <= $amount_rec; $i++) {
             $data[$i]['name'] = $this->getRandomName();
             $data[$i]['parent'] = $this->getRandomParent($i, $data, $deep);
         }
-        var_dump($data); die;
+        var_dump($data);
         return $data;
 
     }
@@ -59,18 +65,28 @@ class Task3 extends BaseController
 
     private function getRandomParent($cur_id, $data, $deep)
     {
-        $parent = rand(0, $cur_id - 1);
-        $tmp = $parent;
+        $j = false;
+        while ($j === false) {
+            $parent = rand(0, $cur_id - 1);
+            $j = $this->testParent($parent, $data, $deep);
+//            var_dump($parent);
 
-        if($parent > 0) {
-            for ($i = 0; $i < $deep; $i++) {
-                if($data[$tmp]['parent'] > 0) {
-                    var_dump($tmp);
-                }
+        }
+//        var_dump('end');
+        return $parent;
+    }
+
+    private function testParent($parent, $data, $deep)
+    {
+        for ($i = 0; $i < $deep; $i++) {
+            if ($parent > 0 && $i === $deep - 1) {
+                return false;
+            } else if ($parent > 0) {
+                $parent = $data[$parent]['parent'];
+            } else {
+                return true;
             }
         }
-        var_dump('h');
-        return $parent;
     }
 
 }

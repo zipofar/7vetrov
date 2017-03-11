@@ -15,7 +15,6 @@ class MTask3 extends BaseModel
 
     public function fillTable($data)
     {
-
         $sql = 'INSERT INTO `tree` SET name = :name, parent = :parent';
 
         foreach ($data as $item) {
@@ -23,6 +22,14 @@ class MTask3 extends BaseModel
             $stmt->execute($item);
         }
 
+    }
+
+    public function getTree()
+    {
+        $sql = 'SELECT * FROM `tree` ORDER BY `parent`';
+        $stmt = $this->DB->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function truncateTable()

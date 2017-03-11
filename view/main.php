@@ -5,5 +5,6 @@
     <li class="list-group-item"><a href="/task3/createTable">Task 3 : Create Table</a></li>
     <li class="list-group-item"><a href="/task3/insert">Task 3 : Insert Data</a></li>
     <li class="list-group-item"><a href="/task3/truncate">Task 3 : Clear Data</a></li>
+    <li class="list-group-item"><a href="/task3/showTree">Task 3 : Show Tree</a></li>
 </ul>
 <?php require_once 'footer.php'; ?>
